@@ -3,6 +3,11 @@ CXXFLAGS  := -p -g -std=c++11  -Weffc++
 OBJDIR	  := build
 LDFLAGS   := -fPIC
 
+node := ${shell uname -n}
+home_3rd := ${HOME}/3rd/${node}
+CPPFLAGS += -I${home_3rd}/pcap/include
+LDLIBS += -L${home_3rd}/pcap/lib -lpcap
+
 HAVE_EXANIC_H := ${shell $(CXX) $(CXXFLAGS) -include exanic/exanic.h -E -x c /dev/null >/dev/null 2>&1 && echo 1 || echo 0}
 ifeq ($(HAVE_EXANIC_H),1)
   CPPFLAGS += -DWITH_EXANIC
